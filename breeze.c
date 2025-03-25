@@ -285,10 +285,10 @@ void show_about_dialog(GtkWidget *widget, gpointer window) {
                                                GTK_DIALOG_DESTROY_WITH_PARENT,
                                                GTK_MESSAGE_INFO,
                                                GTK_BUTTONS_OK,
-                                               "Text Editor\nVersion 1.0.0\n"
-                                               "Created by anonp4x\n"
-                                               "License: MIT\n"
-                                               "Source code available at https://github.com/anonp4x/editor");
+                                               "Text Editor\nVersion 2.0.0\n"
+                                               "Created by ovhcat\n"
+                                               "License: Gpl\n"
+                                               "Source code available at https://github.com/ovhcat/breeze-editor/");
 
     gtk_window_set_title(GTK_WINDOW(dialog), "About");
     gtk_dialog_run(GTK_DIALOG(dialog));
@@ -366,13 +366,30 @@ void create_text_editor_window() {
     text_view = gtk_source_view_new_with_buffer(buffer);
     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(text_view), GTK_WRAP_WORD);
     gtk_source_view_set_show_line_numbers(GTK_SOURCE_VIEW(text_view), TRUE);
+    gtk_source_buffer_set_highlight_matching_brackets(buffer, TRUE);  // Enable bracket matching
     apply_syntax_highlighting(buffer, NULL);  // Apply initial syntax highlighting
     apply_font_size(); // Apply initial font size
+
+    // Add rulers
+    GArray *rulers = g_array_new(FALSE, FALSE, sizeof(gint));
+    gint ruler_position = 80;  // Example position for a ruler at column 80
+    g_array_append_val(rulers, ruler_position);
+    g_object_set(text_view, "right-margin-position", 80, "right-margin", TRUE, NULL);
+    gtk_source_view_set_right_margin_position(GTK_SOURCE_VIEW(text_view), 80);
+
+    // Add minimap
+    GtkWidget *source_map = gtk_source_map_new();
+    gtk_source_map_set_view(GTK_SOURCE_MAP(source_map), GTK_SOURCE_VIEW(text_view));
 
     GtkWidget *scrolled_window = gtk_scrolled_window_new(NULL, NULL);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), scrolled_window, gtk_label_new("Untitled"));
+
+    GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), scrolled_window, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), source_map, FALSE, FALSE, 0);
+
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), hbox, gtk_label_new("Untitled"));
 
     // Status Bar
     statusbar = gtk_statusbar_new();
