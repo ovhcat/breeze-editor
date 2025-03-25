@@ -6,5 +6,3 @@ gcc -o breeze-editor breeze-editor.c `pkg-config --cflags --libs gtk+-3.0 gtksou
 
 
 ./breeze-editor
-
-
