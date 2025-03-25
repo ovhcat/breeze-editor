@@ -25,8 +25,10 @@ sudo apt install libgtk-3-dev libgtksourceview-3.0-dev build-essential
 
 
 # Todo: check this
-# original gcc -o breeze-editor breeze-editor.c `pkg-config --cflags --libs gtk+-3.0 gtksourceview-3.0`
-# changeed gcc breeze-editor.c -o breeze-editor $(pkg-config --cflags --libs gtk+-3.0 gtksourceview-3.0)
+# original
+## gcc -o breeze-editor breeze-editor.c `pkg-config --cflags --libs gtk+-3.0 gtksourceview-3.0`
+#changeed
+## gcc breeze-editor.c -o breeze-editor $(pkg-config --cflags --libs gtk+-3.0 gtksourceview-3.0)
 
 gcc breeze-editor.c -o breeze-editor $(pkg-config --cflags --libs gtk+-3.0 gtksourceview-3.0)
 
