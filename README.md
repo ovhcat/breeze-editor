@@ -1,8 +1,27 @@
+```sh
+# Update the apt list
 sudo apt update
+
+# Update the system to be sure
+sudo apt upgrade
+
+## reboot if needed
+## sudo reboot now
+
+
+# install req. packages
+#  libgtk-3-dev
+#  libgtksourceview-3.0-dev
+#  build-essential
 sudo apt install libgtk-3-dev libgtksourceview-3.0-dev build-essential
 
 
-gcc -o breeze-editor breeze-editor.c `pkg-config --cflags --libs gtk+-3.0 gtksourceview-3.0`
+# Todo: check this
+# original gcc -o breeze-editor breeze-editor.c `pkg-config --cflags --libs gtk+-3.0 gtksourceview-3.0`
+# changeed gcc breeze-editor.c -o breeze-editor $(pkg-config --cflags --libs gtk+-3.0 gtksourceview-3.0)
 
+gcc breeze-editor.c -o breeze-editor $(pkg-config --cflags --libs gtk+-3.0 gtksourceview-3.0)
 
+# To run it:
 ./breeze-editor
+```
