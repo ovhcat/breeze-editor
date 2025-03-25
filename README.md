@@ -1,3 +1,11 @@
+<div align="center">
+  <h1>Text Editor</h1>
+  <h4><i>Simple Lightweight Text Editor in C</i></h4>
+</div>
+
+
+
+
 ```sh
 # Update the apt list
 sudo apt update
